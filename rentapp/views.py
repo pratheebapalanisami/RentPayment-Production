@@ -8,10 +8,6 @@ from rentapp.decorators import employee_required, tenant_required
 from rentapp.forms import PropertyForm, MaintenanceRequestForm, PaymentForm
 from rentapp.models import Property, Payment, MaintenanceRequest
 from django.shortcuts import render, redirect, get_object_or_404
-from rentapp.serializers import PropertySerializer, MaintenanceRequestSerializer, PaymentSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
 
 @login_required
 def home(request):

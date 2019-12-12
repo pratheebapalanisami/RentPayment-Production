@@ -1,7 +1,6 @@
 from accounts.views import user_login
 from django.urls import path, re_path
 from rentapp.views import home
-from rest_framework.urlpatterns import format_suffix_patterns
 from django.conf.urls import url
 
 from . import views
