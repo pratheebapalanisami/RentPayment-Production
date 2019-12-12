@@ -2,6 +2,7 @@ from accounts.views import user_login
 from django.urls import path, re_path
 from rentapp.views import home
 from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import views
 
@@ -22,4 +23,8 @@ urlpatterns = [
     path('tenant/payment_history', views.payment_history, name='payment_history'),
     path('tenant/maintenance_request', views.maintenance_request, name='maintenance_request'),
     path('tenant/maintenance_request_history', views.maintenance_request_history, name='maintenance_request_history'),
+    url(r'^properties_json/', views.PropertyList.as_view()),
+    url(r'^maintenancerequest_json/', views.MaintenanceRequestList.as_view()),
+    url(r'^payment_json/', views.PaymentList.as_view()),
 ]
+urlpatterns = format_suffix_patterns(urlpatterns)

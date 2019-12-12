@@ -8,6 +8,9 @@ from rentapp.decorators import employee_required, tenant_required
 from rentapp.forms import PropertyForm, MaintenanceRequestForm, PaymentForm
 from rentapp.models import Property, Payment, MaintenanceRequest
 from django.shortcuts import render, redirect, get_object_or_404
+from rentapp.serializers import PropertySerializer, MaintenanceRequestSerializer, PaymentSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 @login_required
 def home(request):
@@ -159,3 +162,23 @@ def maintenance_request_update(request, pk):
         form = MaintenanceRequestForm(instance=maintenancerequest)
 
     return render(request, 'rentapp/employee/maintenance_request_update.html', {'form': form})
+
+
+#API
+class PropertyList(APIView):
+    def get(self,request):
+        properties_json = Property.objects.all()
+        serializer = PropertySerializer(properties_json, many=True)
+        return Response(serializer.data)
+
+class MaintenanceRequestList(APIView):
+    def get(self,request):
+        maintenancerequest_json = MaintenanceRequest.objects.all()
+        serializer = MaintenanceRequestSerializer(maintenancerequest_json, many=True)
+        return Response(serializer.data)
+
+class PaymentList(APIView):
+    def get(self,request):
+        payment_json = Payment.objects.all()
+        serializer = PaymentSerializer(payment_json, many=True)
+        return Response(serializer.data)
