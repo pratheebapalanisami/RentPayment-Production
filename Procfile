@@ -1,1 +1,1 @@
-web: gunicorn rent.wsgi --log-file -
+web:  python manage.py collectstatic --no-input; gunicorn rent.wsgi --log-file -
