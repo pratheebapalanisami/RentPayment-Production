@@ -1,0 +1,82 @@
+
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <title>Park Place Rent Payment</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body id="app-layout">
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+            <!-- Collapsed Hamburger -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#myNavbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Branding Image -->
+            <a class="navbar-brand" href="/home">
+                Park Place
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            {% if user.is_authenticated %}
+                {% if user.profile.is_employee %}
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'rentpayment:add_property' %}">Add Property</a></li>
+                       <li><a href="{% url 'rentpayment:property_list' %}">Property List</a></li>
+                        <li><a href="{% url 'rentpayment:maintenance_request_list' %}">Maintenance Request List</a></li>
+                    </ul>
+                {%endif %}
+            {% endif %}
+            {% if user.is_authenticated %}
+                {% if user.profile.is_tenant%}
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'rentpayment:pay_rent' %}">Pay Rent</a></li>
+                        <li><a href="{% url 'rentpayment:payment_history' %}">Payment History</a></li>
+                       <li><a href="{% url 'rentpayment:maintenance_request_history' %}">Maintenance Request</a></li>
+                    </ul>
+                {% endif %}
+            {% endif %}
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                            <a id="pages" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                               class="nav-link dropdown-toggle"><i class="fa fa-signing"></i>Register
+                            </a>
+                            <div aria-labelledby="pages" class="dropdown-menu">
+                                <a href="{% url 'employee_register' %}" class="dropdown-item">Employee</a>
+                                <a href="{% url 'tenant_register' %}" class="dropdown-item">Tenant</a>
+                            </div>
+                    </li>
+                    <a href="{% url 'login' %}" class="btn navbar-btn btn-outline-light mb-5 mb-lg-0">
+                        <i class="fa fa-sign-in"></i>Login
+                    </a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="content container">
+    <div class="row">
+        <div class="col-md-6">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

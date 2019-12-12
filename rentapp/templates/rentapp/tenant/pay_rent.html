@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>Pay Rent</h1>
+    {% if is_rent_paid %}
+        <br><br><br>
+        <P>Your rent for this month is already paid</P>
+    {% else %}
+            <br>
+        <P class="textvalue">Your rent for this month is $ {{ property.rent_amount}}</P>
+        <form action="{% url 'rentpayment:payment_detail' %}" method="post">
+        {% csrf_token %}
+            <button type="submit" class="save btn btn-default">Pay Rent</button>
+        </form>
+    {% endif %}
+{% endblock %}

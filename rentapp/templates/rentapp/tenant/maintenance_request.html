@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>Maintenance Request</h1>
+    <form method="POST" class="maintenancerequest-form">{% csrf_token %}
+        <b>Name</b><br>
+            <input type="text" id="user" value="{{ currentuser }}" readonly>
+          {{ form|crispy }}
+        <br><br>
+        <button type="submit" class="save btn btn-default">Raise</button>
+    </form>
+{% endblock %}

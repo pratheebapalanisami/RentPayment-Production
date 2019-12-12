@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    {% if is_rent_paid %}
+        <P>Your rent for this month is already paid</P>
+    {% else %}
+        <P class="textvalue">Your rent for this month is $ {{ property.rent_amount}}
+        <form action="{% url 'rentpayment:payment_success' %}" method="post" class="payment-form">
+            {% csrf_token %}
+            {{ form|crispy }}
+            Card Number: <input type="text" name="cardnumber"><br><br>
+            Valid Thru: <input type="text" name="valid"><br><br>
+            CVV: <input type="text" name="cvv"><br><br>
+            Name on the Card: <input type="text" name="name"><br><br>
+            Billing Address: <input type="text" name="billingaddress"><br><br>
+            Rent Amount: <input type="text" id="rentamount" name="rentamount" value="{{ property.rent_amount }}" readonly><br><br>
+            <button type="submit" class="save btn btn-default">Make Payment</button>
+        </form>
+        </P>
+    {% endif %}
+    </body>
+    </html>
+{% endblock %}
